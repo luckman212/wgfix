@@ -1,6 +1,6 @@
 #!/bin/sh
 
-# wgfix v2.0.1
+# wgfix v2.0.3
 # https://github.com/luckman212/wgfix
 
 _log() {
@@ -68,14 +68,13 @@ _log "WAN UP: $1"
 /usr/local/bin/php -r '
 require_once("wireguard/includes/wg.inc");
 if (is_array($wgg["peers"]) && count($wgg["peers"]) > 0) {
-  $x = array_filter($wgg["peers"], function($v, $k) {
+  $peers = array_filter($wgg["peers"], function($v, $k) {
     return substr($v["descr"], -1) == "@";
   }, ARRAY_FILTER_USE_BOTH);
-  foreach ($x as $peer_idx => $peer) {
-    echo $peer["descr"] . "|" . $peer["tun"] . "|" . $peer["endpoint"] . "|" . $peer["port"] . "\n";
+  foreach ($peers as $peer_idx => $p) {
+    echo implode("|", [$p["descr"], $p["tun"], $p["endpoint"], $p["port"]]), PHP_EOL;
   }
-}
-' |
+}' |
 while IFS='|' read -r DESC IFNAME ENDPOINT PORT; do
   _log "checking $DESC ($IFNAME) at $ENDPOINT:$PORT"
   _failback $ENDPOINT $PORT
