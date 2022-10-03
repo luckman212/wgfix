@@ -1,9 +1,10 @@
-# wgfix v2.0.1
+# wgfix v2.0.3
 
 # Install Instructions
 
-1. Apply commit `947d77f4c6193866f04999bbb44b8608587c3f8e` using **System Patches**
-2. Add `@` to the end of the description of any **peers** that you want to fail back after WANUP events, e.g. rename `my_peer` → `my_peer@`
+1. Apply commit `e2b1a35089b1bd567246701cae63de7f90c8eeef` using **System Patches**
+2. Since I haven't figured out how to make System Patches/git [mark the script as executable][1], you're going to have to manually log in via console or ssh and type `chmod +x /etc/wgfix.sh`
+3. Add `@` to the end of the description of any **peers** that you want to fail back after WANUP events, e.g. rename `my_peer` → `my_peer@`
 
 # Testing
 
@@ -14,3 +15,5 @@ You can also manually test the script via console/ssh:
 ```shell
 /etc/wgfix.sh <GW_NAME> 0
 ```
+
+[1]: https://forum.netgate.com/topic/175062/add-a-new-file-as-part-of-a-commit-and-have-system-patches-set-the-x-flag-on-it
