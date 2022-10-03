@@ -1,8 +1,8 @@
 # wgfix v2.0
 
-# Installation instructions
+# Install Instructions
 
-1. Apply commit 197238d4fd21c17ab3e5e1af108e303c76f80303 using System Patches
+1. Apply commit `197238d4fd21c17ab3e5e1af108e303c76f80303` using **System Patches**
 2. Add `@` to the end of the description of any **peers** that you want to fail back after WANUP events, e.g. rename `my_peer` → `my_peer@`
 
 # Testing
