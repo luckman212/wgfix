@@ -1,18 +1,7 @@
 #!/bin/sh
 
-# wgfix v2.0
+# wgfix v2.0.1
 # https://github.com/luckman212/wgfix
-
-# install instructions:
-# =============================================================================
-# 1. apply commit from the README using System Patches
-# 2. add `@` to the end of the description of any peers that you want to fail
-#    back after WANUP events, e.g. 'my_peer@'
-#
-# testing
-# =============================================================================
-# you can manually test the script via console/ssh:
-# /root/wgfix.sh <GW_NAME> 0
 
 _log() {
   /usr/bin/logger -t wgfix "$1"
