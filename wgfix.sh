@@ -1,6 +1,6 @@
 #!/bin/sh
 
-# wgfix v2.0.3
+# wgfix v2.0.4
 # https://github.com/luckman212/wgfix
 
 _log() {
@@ -52,7 +52,7 @@ _failback() {
   fi
 }
 
-LOCKFILE="/tmp/${0##*/}.lock"
+LOCKFILE="/tmp/${0##*/}_$1.lock"
 _log "$0 called, args: $1 $2"
 if [ -z "$2" ] || [ "$2" -ne 0 ]; then
   # the point of this script is to "fail back" so we only care about "WAN UP" events
