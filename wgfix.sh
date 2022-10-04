@@ -1,6 +1,6 @@
 #!/bin/sh
 
-# wgfix v2.0.5
+# wgfix v2.1.0
 # https://github.com/luckman212/wgfix
 
 _log() {
@@ -10,15 +10,15 @@ _log() {
 
 _acquire_lock() {
   if /bin/pgrep -F "$LOCKFILE" >/dev/null 2>&1; then
-    _log "lockfile present, aborting"
+    _log "lockfile $LOCKFILE present, aborting"
     exit 1
   fi
-  _log "acquiring lockfile"
+  _log "acquiring lockfile $LOCKFILE"
   echo $$ >"$LOCKFILE"
 }
 
 _die() {
-  _log "done, removing lockfile"
+  _log "done, removing lockfile $LOCKFILE"
   [ -f "$LOCKFILE" ] && rm "$LOCKFILE"
   exit $1
 }
@@ -31,8 +31,10 @@ _failback() {
     _log "pausing 10s to allow gateway change to occur"
     /bin/sleep 10
     DEF_GW=$(/sbin/route -n get "$IP" | /usr/bin/awk '/interface:/ {print $2; exit;}')
-    _log "Default gateway iface: $DEF_GW"
-    BAD_STATES=$(/sbin/pfctl -vvss | /usr/bin/grep "$IP:$PORT" | /usr/bin/grep -v "$DEF_GW" | /usr/bin/wc -l | /usr/bin/bc)
+    _log "Default route to WG endpoint is via interface: $DEF_GW"
+    DEF_GW_IP=$(/usr/local/bin/php -r 'include("gwlb.inc"); print(get_interface_ip($argv[1]));' "$DEF_GW")
+    _log "Looking for stale states to $IP:$PORT that are not related to $DEF_GW_IP"
+    BAD_STATES=$(/sbin/pfctl -vvss | /usr/bin/grep "$IP:$PORT" | /usr/bin/grep -v "$DEF_GW_IP" | /usr/bin/wc -l | /usr/bin/bc)
     if [ "$BAD_STATES" -gt 0 ]; then
       _log "found $BAD_STATES bad states; bouncing wg service"
       /usr/local/bin/php_wg -f /usr/local/pkg/wireguard/includes/wg_service.inc stop
