@@ -1,6 +1,6 @@
 #!/bin/sh
 
-# wgfix v2.0.4
+# wgfix v2.0.5
 # https://github.com/luckman212/wgfix
 
 _log() {
@@ -32,7 +32,7 @@ _failback() {
     /bin/sleep 10
     DEF_GW=$(/sbin/route -n get "$IP" | /usr/bin/awk '/interface:/ {print $2; exit;}')
     _log "Default gateway iface: $DEF_GW"
-    BAD_STATES=$(/sbin/pfctl -vvss | /usr/bin/grep "$IP:$PORT" | /usr/bin/grep -v "$DEF_GW" | wc -l)
+    BAD_STATES=$(/sbin/pfctl -vvss | /usr/bin/grep "$IP:$PORT" | /usr/bin/grep -v "$DEF_GW" | /usr/bin/wc -l | /usr/bin/bc)
     if [ "$BAD_STATES" -gt 0 ]; then
       _log "found $BAD_STATES bad states; bouncing wg service"
       /usr/local/bin/php_wg -f /usr/local/pkg/wireguard/includes/wg_service.inc stop
