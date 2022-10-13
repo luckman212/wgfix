@@ -3,7 +3,7 @@
 # Install Instructions
 
 1. Apply commit [`cb710c066a0fdf11e5aac107d6b9cd12f9286d82`][2] using **System Patches**
-2. Since I haven't figured out how to make System Patches/git [mark the script as executable][1], you're going to have to manually log in via console or ssh and type `chmod +x /etc/wgfix.sh`
+2. Since I haven't figured out how to make System Patches/git [mark the script as executable][1], you're going to have to manually log in via console or ssh and type `chmod +x /etc/wgfix.sh`. You can also run this command via Diagnostics → Command Prompt → Execute Shell Command.
 3. Add `@` to the end of the description of any **peers** that you want to fail back after WANUP events, e.g. rename `my_peer` → `my_peer@`
 
 # Testing
