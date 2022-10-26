@@ -101,7 +101,7 @@ fi
 _log "pausing 10s to allow gateway change to occur"
 /bin/sleep 10
 
-# iterate and find peers / endpoints to fail trigger failback
+# iterate and find peers / endpoints to trigger failback
 # TODO: when php8 is available, change to str_ends_with()
 # https://www.php.net/manual/en/function.str-ends-with.php
 /usr/local/bin/php -r '
